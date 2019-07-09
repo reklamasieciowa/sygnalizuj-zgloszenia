@@ -29,7 +29,7 @@ class CreateEntriesTable extends Migration
             $table->text('already_done');
             $table->boolean('agree');
             $table->binary('hash');
-            $table->unsignedInteger('status_id');
+            $table->unsignedInteger('status_id')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -13,34 +13,22 @@
     <div class="row mb-3">
       <div class="col-lg-12">
         <h2 class="h3-responsive">
-          Zgłoszenia usunięte:
+          Tematy: 
         </h2>
-
-          <form action="{{ route('entries.trashed.empty') }}" method="POST">
-            @method('DELETE')
-            @csrf
-          <button type="submit" onclick="return confirm('Czy napewno usunąć wszystko z kosza?')" class="btn btn-sm btn-danger"><i class="far fa-trash-alt fa-lg mr-2"></i> Opróżnij kosz</a>
-          </form>
-        
       </div>
     </div>
+
     <div class="row">
-      @if(isset($entries))
+      @if(isset($subjects))
       <div class="col-lg-12 table-responsive">
         
         <table id="entries" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
           <thead>
             <th class="th-sm">
-              Firma
-            </th>
-            <th class="th-sm">
               Temat
             </th>
-            <th class="th-sm">
-              Status
-            </th>
-            <th class="th-sm">
-              Data
+            <th>
+              Ilość zgłoszeń
             </th>
             <th>
               Akcje
@@ -48,33 +36,23 @@
           </thead>
           <tbody>
 
-           @foreach($entries as $entry)
+           @foreach($subjects as $subject)
            <tr>
            <td>
-             {{ $entry->company }}
+             {{ $subject->name }}
            </td>
            <td>
-             {{ $entry->subject->name }}
+             {{ $subject->entries->count() }}
+
+             @if($subject->entries->count() > 0)
+               <a href="{{ route('subjects.entries', [$subject]) }}" title="Zobacz"> (Zobacz <i class="far fa-eye text-info"></i>)</a>
+            @endif
            </td>
-           <td>
-
-              @if($entry->status->id == 1)
-                <a href="{{ route('entry.changestatus', [$entry->id]) }}" class="text-danger new">
-              @elseif($entry->status->id == 2)
-                <a href="{{ route('entry.changestatus', [$entry->id]) }}" class="text-warning running">
-              @else
-                <a href="{{ route('entry.changestatus', [$entry->id]) }}" class="text-success done">
-              @endif
-                {{ $entry->status->name }}
-              </a>
-
-              </td>
-              <td>
-               {{ $entry->created_at }}<br><small>{{ Carbon\Carbon::parse($entry->created_at)->diffForHumans(null, false, false, 2) }}</small>
-             </td>
              <td>
-               <a href="{{ route('entry.restore', [$entry->id]) }}" title="Przywróć"><i class="fas fa-trash-restore fa-lg text-success mr-2"></i></a>
-               <a href="{{ route('entry.delete', [$entry->id]) }}" title="Usuń"><i class="far fa-trash-alt fa-lg text-danger"></i></a>
+               <a href="{{ route('subjects.edit', [$subject]) }}" title="Edytuj"><i class="fas fa-edit fa-lg text-info"></i></a>
+               @if($subject->entries->count() == 0)
+               <a href="{{ route('subjects.destroy', [$subject]) }}" onclick="return confirm('Czy napewno usunąć temat?')" title="Usuń"><i class="far fa-trash-alt fa-lg text-danger"></i></a>
+               @endif
              </td>
            </tr> 
            @endforeach 
@@ -82,14 +60,33 @@
        </table>
      </div>
      @else
-       <div class="col-lg-12">
-          <p>Brak zgłoszeń.</p>
-        </div>
+        <p>Brak zgłoszeń.</p>
      @endif
-     <div class="col-lg-12">
-       <a href="{{ route('entries') }}" title="Wróć do listy zgłoszeń" class="btn btn-info"><i class="far fa-arrow-alt-circle-left fa-lg mr-3 "></i> Wróć do listy zgłoszeń</a>
-     </div>
    </div>
+
+       <div class="row mb-3">
+      <div class="col-lg-12">
+        <h3 class="h4-responsive">
+          Dodaj temat:
+        </h3>
+        <form action="{{ route('subjects.store') }}" method="POST">
+              @csrf
+
+              <div class="mt-3">
+                <label for="name">Temat</label>
+                <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}">
+
+                @if ($errors->has('name'))
+                <div class="invalid-feedback" role="alert">
+                  <strong>{{ $errors->first('name') }}</strong>
+                </div>
+                @endif
+              </div>
+
+              <button class="btn btn-info my-4" type="submit">Zapisz</button>
+        </form>
+      </div>
+    </div>
 </div>
 </div>
 @endsection
@@ -123,7 +120,7 @@
             }
         },
         "pageLength": 10,
-        "order": [[ 3, "desc" ]]
+        "order": [[ 0, "asc" ]]
 
       });
       $('.dataTables_length').addClass('bs-select');

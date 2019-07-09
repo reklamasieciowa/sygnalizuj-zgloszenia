@@ -3,6 +3,9 @@
 @section('content')
 <div class="container-fluid">
     <div class="container">
+      
+      @include('shared.info')
+
         <div class="col-lg-4">
             <!-- Card -->
             <div class="card">

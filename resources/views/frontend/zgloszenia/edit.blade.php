@@ -24,9 +24,9 @@
             <form action="{{ route('entry.update', [$entry->id]) }}" method="POST">
               @csrf
 
-              <div class="md-form mt-3">
-                <input type="text" id="company" name="company" class="form-control" value="{{$entry->company}}">
+              <div class="mt-3">
                 <label for="company">Firma</label>
+                <input type="text" id="company" name="company" class="form-control" value="{{$entry->company}}">
                 @if ($errors->has('company'))
                 <div class="invalid-feedback" role="alert">
                   <strong>{{ $errors->first('company') }}</strong>
@@ -34,10 +34,9 @@
                 @endif
               </div>
 
-              <div class="md-form mt-3">
-                Temat:
+              <div class="mt-3">
+                <label for="subject_id">Temat:</label>
                 <select name="subject_id" id="subject_id" class="browser-default custom-select">
-                  <option value="" disabled selected>Temat</option>
                   @foreach($subjects as $subject)
                   <option value="{{ $subject->id }}" @if($entry->subject_id == $subject->id) selected @endif>{{ $subject->name }}</option>
                   @endforeach
@@ -49,9 +48,10 @@
                 @endif
               </div>
 
-              <div class="md-form mt-3">
+              <div class="mt-3">
+                <label for="person">Osoba zgłaszająca</label>
                 <input type="text" id="person" name="person" class="form-control" value="{{$entry->person}}">
-                <label for="person">Osoba</label>
+
                 @if ($errors->has('person'))
                 <div class="invalid-feedback" role="alert">
                   <strong>{{ $errors->first('person') }}</strong>
@@ -59,9 +59,10 @@
                 @endif
               </div>
 
-                <div class="md-form mt-3">
+                <div class="mt-3">
+                <label for="who">Kogo dotyczy zgłoszenie</label>
                 <input type="text" id="who" name="who" class="form-control" value="{{$entry->who}}">
-                <label for="who">Kto</label>
+
                 @if ($errors->has('who'))
                 <div class="invalid-feedback" role="alert">
                   <strong>{{ $errors->first('who') }}</strong>
@@ -69,7 +70,7 @@
                 @endif
               </div>
 
-              <div class="form-group">
+              <div class="mt-3">
                 <label for="what">Co się stało?</label>
                 <textarea class="form-control" id="what" name="what" rows="4">{{$entry->what}}</textarea>
                 @if ($errors->has('what'))
@@ -79,9 +80,10 @@
                 @endif
               </div>
 
-              <div class="md-form mt-3">
-                <input type="text" id="where" name="where" class="form-control" value="{{$entry->where}}">
+              <div class="mt-3">
                 <label for="where">Gdzie?</label>
+                <input type="text" id="where" name="where" class="form-control" value="{{$entry->where}}">
+
                 @if ($errors->has('where'))
                 <div class="invalid-feedback" role="alert">
                   <strong>{{ $errors->first('where') }}</strong>
@@ -89,9 +91,10 @@
                 @endif
               </div>
 
-              <div class="md-form mt-3">
-                <input type="text" id="when" name="when" class="form-control" value="{{$entry->when}}">
+              <div class="mt-3">
                 <label for="when">Kiedy</label>
+                <input type="text" id="when" name="when" class="form-control" value="{{$entry->when}}">
+
                 @if ($errors->has('when'))
                 <div class="invalid-feedback" role="alert">
                   <strong>{{ $errors->first('when') }}</strong>
@@ -99,8 +102,8 @@
                 @endif
               </div>
 
-              <div class="form-group">
-                <label for="how">Jak do tego doszło?</label>
+              <div class="mt-3">
+                <label for="how">W jaki sposób to się odbywa?</label>
                 <textarea class="form-control" id="how" name="how" rows="4">{{$entry->how}}</textarea>
                 @if ($errors->has('how'))
                 <div class="invalid-feedback" role="alert">
@@ -109,9 +112,11 @@
                 @endif
               </div>
 
-              Załącznik  {{ $entry->attachment_id }}
+              <div class="mt-3">
+                Załącznik  {{ $entry->attachment_id }}
+              </div>
 
-              <div class="form-group">
+              <div class="mt-3">
                 <label for="why">Dlaczego to się stało?</label>
                 <textarea class="form-control" id="why" name="why" rows="4">{{$entry->why}}</textarea>
                 @if ($errors->has('why'))
@@ -121,7 +126,7 @@
                 @endif
               </div>
 
-              <div class="form-group">
+              <div class="mt-3">
                 <label for="already_done">Co zostało do tej pory zrobione?</label>
                 <textarea class="form-control" id="already_done" name="already_done" rows="4">{{$entry->already_done}}</textarea>
                 @if ($errors->has('already_done'))
@@ -131,7 +136,7 @@
                 @endif
               </div>
 
-              <div class="form-group">
+              <div class="mt-3">
                 <label for="anonymous">Zgłoszenie anonimowe?</label><br>
                 <div class="custom-control custom-radio custom-control-inline">
                   <input type="radio" class="custom-control-input" id="anonymous1" name="anonymous" value="0" @if($entry->anonymous === 0) checked @endif>
@@ -150,7 +155,7 @@
                 @endif
               </div>
 
-              <div class="form-group">
+              <div class="mt-3">
                 <label for="agree">Zgoda na przetwarzenie danych?</label><br>
                 <div class="custom-control custom-radio custom-control-inline">
                   <input type="radio" class="custom-control-input" id="agree1" name="agree" value="0" @if($entry->agree === 0) checked @endif>
@@ -168,7 +173,7 @@
                 @endif
               </div>
 
-              <div class="md-form mt-3">
+              <div class="mt-3">
                 Status:
                 <select name="status_id" id="status_id" class="browser-default custom-select">
                   <option value="" disabled selected>Status</option>

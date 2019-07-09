@@ -13,15 +13,8 @@
     <div class="row mb-3">
       <div class="col-lg-12">
         <h2 class="h3-responsive">
-          Zgłoszenia usunięte:
+          Zgłoszenia z tematem {{ $subject->name }}: 
         </h2>
-
-          <form action="{{ route('entries.trashed.empty') }}" method="POST">
-            @method('DELETE')
-            @csrf
-          <button type="submit" onclick="return confirm('Czy napewno usunąć wszystko z kosza?')" class="btn btn-sm btn-danger"><i class="far fa-trash-alt fa-lg mr-2"></i> Opróżnij kosz</a>
-          </form>
-        
       </div>
     </div>
     <div class="row">
@@ -73,7 +66,8 @@
                {{ $entry->created_at }}<br><small>{{ Carbon\Carbon::parse($entry->created_at)->diffForHumans(null, false, false, 2) }}</small>
              </td>
              <td>
-               <a href="{{ route('entry.restore', [$entry->id]) }}" title="Przywróć"><i class="fas fa-trash-restore fa-lg text-success mr-2"></i></a>
+               <a href="{{ route('entry.show', [$entry->id]) }}" title="Zobacz"><i class="far fa-eye fa-lg text-success"></i></a>
+               <a href="{{ route('entry.edit', [$entry->id]) }}" title="Edytuj"><i class="fas fa-edit fa-lg text-info"></i></a>
                <a href="{{ route('entry.delete', [$entry->id]) }}" title="Usuń"><i class="far fa-trash-alt fa-lg text-danger"></i></a>
              </td>
            </tr> 
@@ -82,14 +76,11 @@
        </table>
      </div>
      @else
-       <div class="col-lg-12">
-          <p>Brak zgłoszeń.</p>
-        </div>
+        <p>Brak zgłoszeń.</p>
      @endif
-     <div class="col-lg-12">
-       <a href="{{ route('entries') }}" title="Wróć do listy zgłoszeń" class="btn btn-info"><i class="far fa-arrow-alt-circle-left fa-lg mr-3 "></i> Wróć do listy zgłoszeń</a>
-     </div>
    </div>
+
+  <a href="{{ route('subjects') }}" title="Wróć do listy tematów" class="btn btn-info"><i class="far fa-arrow-alt-circle-left fa-lg mr-2"></i> Wróć do listy tematów</a>
 </div>
 </div>
 @endsection

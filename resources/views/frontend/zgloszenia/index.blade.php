@@ -112,7 +112,7 @@
             }
         },
         "pageLength": 10,
-        "order": [[ 4, "desc" ]]
+        "order": [[ 3, "desc" ]]
 
       });
       $('.dataTables_length').addClass('bs-select');

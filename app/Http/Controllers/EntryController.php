@@ -18,7 +18,7 @@ class EntryController extends Controller
     public function index()
     {        
         $entries = Entry::all();
-          
+
         return view('frontend.zgloszenia.index')->with('entries', $entries);
     }
 
@@ -29,7 +29,9 @@ class EntryController extends Controller
      */
     public function create()
     {
-        //
+        $subjects = Subject::all();
+        $statuses = Status::all();
+        return view('frontend.zgloszenia.create')->with('subjects', $subjects)->with('statuses', $statuses);
     }
 
     /**
@@ -40,7 +42,46 @@ class EntryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'company' => 'required',
+            'subject_id' => 'required',
+            'anonymous' => 'required',
+            'person' => 'required',
+            'who' => 'required',
+            'what' => 'required',
+            'where' => 'required',
+            'when' => 'required',
+            'how' => 'required',
+            //'attachment_id' => 'nullable',
+            'why' => 'required',
+            'already_done' => 'required',
+            'agree' => 'required',
+        ]);
+
+        $entry = new Entry;
+
+        $entry->company = $request->company;
+        $entry->subject_id = $request->subject_id;
+        $entry->anonymous = $request->anonymous;
+        $entry->person = $request->person;
+        $entry->who = $request->who;
+        $entry->what = $request->what;
+        $entry->where = $request->where;
+        $entry->when = $request->when;
+        $entry->how = $request->how;
+        //$entry->attachment_id = $request->attachment_id;
+        $entry->why = $request->why;
+        $entry->already_done = $request->already_done;
+        $entry->agree = $request->agree;
+
+        $entry->hash = md5(uniqid('', true));
+
+        $entry->save();
+
+        $request->session()->flash('class', 'alert-success');
+        $request->session()->flash('info', 'Zgłoszenie '.$entry->company.' zapisane.');
+
+        return redirect()->route('home');
     }
 
     public function restore(Request $request, $id)
@@ -152,6 +193,16 @@ class EntryController extends Controller
         return view('frontend.zgloszenia.trashed')->with('entries', $entries);
     }
 
+    public function emptyTrash(Request $request)
+    {
+        $entries = Entry::onlyTrashed()->forceDelete();
+
+        $request->session()->flash('class', 'alert-success');
+        $request->session()->flash('info', 'Kosz opróżniony.');
+          
+        return redirect()->route('entries.trashed');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -166,14 +217,12 @@ class EntryController extends Controller
             $entry->delete();
             $request->session()->flash('class', 'alert-success');
             $request->session()->flash('info', 'Zgłoszenie '.$entry->company.' przeniesione do kosza.');
+            return redirect()->route('entries');
         } else {
             $entry->forceDelete();
-            $request->session()->flash('class', 'alert-danger');
+            $request->session()->flash('class', 'alert-success');
             $request->session()->flash('info', 'Zgłoszenie '.$entry->company.' usunięte.');
-        }
-
-
-
-        return redirect()->route('entries');
+            return redirect()->route('entries.trashed');
+        }    
     }
 }

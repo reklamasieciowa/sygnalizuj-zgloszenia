@@ -1,7 +1,33 @@
+@import 'variables';
+
 body {
 	background-color: #fff;
 }
 
 .new, .running, .done {
 	font-weight: bold;
+}
+
+label {
+	color: #000!important;
+	font-weight: 500!important;
+}
+
+.explainer {
+	margin-top: 10px;
+	padding: 0;
+	font-size: .8rem;
+	border-radius: .25rem;
+	color: rgba(0,0,0,.7);
+	
+	&::before {
+		font-family: "Font Awesome 5 Free";
+		position: relative;
+		top: 3px;
+		font-weight: 900;
+		font-size: 1.2rem;
+		margin-right: 5px;
+		content: '\f05a';
+		color: lighten($blue, 10%);
+	}
 }
