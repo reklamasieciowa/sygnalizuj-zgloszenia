@@ -188,8 +188,13 @@
           </div>
           <div class="col-lg-12 mb-3">
            <hr>
-           <a href="{{ route('entries') }}" title="Wróć do listy zgłoszeń" class="mr-3"><i class="far fa-arrow-alt-circle-left fa-lg text-success"></i> Wróć do listy zgłoszeń</a>
-           <a href="{{ route('entry.delete', [$entry->id]) }}" title="Usuń" class="mr-3"><i class="far fa-trash-alt fa-lg text-danger"></i> Usuń</a>
+           <a class="btn btn-sm btn-success" href="{{ route('entries') }}" title="Wróć do listy zgłoszeń" class="mr-3"><i class="far fa-arrow-alt-circle-left fa-lg"></i> Wróć do listy zgłoszeń</a>
+
+           <form action="{{ route('entry.delete', [$entry->id]) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-sm btn-danger" type="submit"><i class="far fa-trash-alt fa-lg"></i> Usuń</button>
+              </form>
          </div>
        </div>
      </div>

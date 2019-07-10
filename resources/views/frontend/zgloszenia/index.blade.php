@@ -20,7 +20,7 @@
     <div class="row">
       @if(isset($entries))
       <div class="col-lg-12 table-responsive">
-        
+
         <table id="entries" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
           <thead>
             <th class="th-sm">
@@ -43,79 +43,84 @@
 
            @foreach($entries as $entry)
            <tr>
-           <td>
-             {{ $entry->company }}
-           </td>
-           <td>
-             {{ $entry->subject->name }}
-           </td>
-           <td>
-
-              @if($entry->status->id == 1)
-                <a href="{{ route('entry.changestatus', [$entry->id]) }}" class="text-danger new">
-              @elseif($entry->status->id == 2)
-                <a href="{{ route('entry.changestatus', [$entry->id]) }}" class="text-warning running">
-              @else
-                <a href="{{ route('entry.changestatus', [$entry->id]) }}" class="text-success done">
-              @endif
-                {{ $entry->status->name }}
-              </a>
-
-              </td>
-              <td>
-               {{ $entry->created_at }}<br><small>{{ Carbon\Carbon::parse($entry->created_at)->diffForHumans(null, false, false, 2) }}</small>
+             <td>
+               {{ $entry->company }}
              </td>
              <td>
-               <a href="{{ route('entry.show', [$entry->id]) }}" title="Zobacz"><i class="far fa-eye fa-lg text-success"></i></a>
-               <a href="{{ route('entry.edit', [$entry->id]) }}" title="Edytuj"><i class="fas fa-edit fa-lg text-info"></i></a>
-               <a href="{{ route('entry.delete', [$entry->id]) }}" title="Usuń"><i class="far fa-trash-alt fa-lg text-danger"></i></a>
+               {{ $entry->subject->name }}
              </td>
-           </tr> 
-           @endforeach 
-         </tbody>
-       </table>
-     </div>
-     @else
-        <p>Brak zgłoszeń.</p>
-     @endif
-   </div>
+             <td>
+
+              <form action="{{ route('entry.changestatus', [$entry->id]) }}" method="POST">
+                @csrf          
+                @if($entry->status->id == 1)
+                <button class="btn btn-sm btn-danger" type="submit">{{ $entry->status->name }}</button>
+                @elseif($entry->status->id == 2)
+                <button class="btn btn-sm btn-warning" type="submit">{{ $entry->status->name }}</button>
+                @elseif($entry->status->id == 3)
+                <button class="btn btn-sm btn-success" type="submit">{{ $entry->status->name }}</button>
+                @endif
+
+              </form>
+            </td>
+            <td>
+             {{ $entry->created_at }}<br><small>{{ Carbon\Carbon::parse($entry->created_at)->diffForHumans(null, false, false, 2) }}</small>
+           </td>
+           <td>
+             <a class="btn btn-sm btn-success" href="{{ route('entry.show', [$entry->id]) }}" title="Zobacz"><i class="far fa-eye fa-lg"></i></a>
+             <a class="btn btn-sm btn-info" href="{{ route('entry.edit', [$entry->id]) }}" title="Edytuj"><i class="fas fa-edit fa-lg"></i></a>
+             <form action="{{ route('entry.delete', [$entry->id]) }}" method="POST">
+              @csrf
+              @method('DELETE')
+              <button class="btn btn-sm btn-danger" type="submit"><i class="far fa-trash-alt fa-lg"></i></button>
+            </form>
+          </td>
+        </tr> 
+        @endforeach 
+      </tbody>
+    </table>
+  </div>
+  @else
+  <p>Brak zgłoszeń.</p>
+  @endif
+</div>
 </div>
 </div>
 @endsection
 
 @section('footer-scripts')
-  <script type="text/javascript" src="{{asset('js/addons/datatables.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/addons/datatables.min.js')}}"></script>
 
-  <script>
-    $(document).ready(function () {
-      $('#entries').DataTable({
-        "language": {
-            "processing":     "Przetwarzanie...",
-            "search":         "Szukaj:",
-            "lengthMenu":     "Pokaż _MENU_ pozycji",
-            "info":           "Pozycje od _START_ do _END_ z _TOTAL_ łącznie",
-            "infoEmpty":      "Pozycji 0 z 0 dostępnych",
-            "infoFiltered":   "(filtrowanie spośród _MAX_ dostępnych pozycji)",
-            "infoPostFix":    "",
-            "loadingRecords": "Wczytywanie...",
-            "zeroRecords":    "Nie znaleziono pasujących pozycji",
-            "emptyTable":     "Brak danych",
-            "paginate": {
-                "first":      "Pierwsza",
-                "previous":   "Poprzednia",
-                "next":       "Następna",
-                "last":       "Ostatnia"
-            },
-            "aria": {
-                "sortAscending": ": aktywuj, by posortować kolumnę rosnąco",
-                "sortDescending": ": aktywuj, by posortować kolumnę malejąco"
-            }
+<script>
+  $(document).ready(function () {
+    $('#entries').DataTable({
+      "language": {
+        "processing":     "Przetwarzanie...",
+        "search":         "Szukaj:",
+        "lengthMenu":     "Pokaż _MENU_ pozycji",
+        "info":           "Pozycje od _START_ do _END_ z _TOTAL_ łącznie",
+        "infoEmpty":      "Pozycji 0 z 0 dostępnych",
+        "infoFiltered":   "(filtrowanie spośród _MAX_ dostępnych pozycji)",
+        "infoPostFix":    "",
+        "loadingRecords": "Wczytywanie...",
+        "zeroRecords":    "Nie znaleziono pasujących pozycji",
+        "emptyTable":     "Brak danych",
+        "paginate": {
+          "first":      "Pierwsza",
+          "previous":   "Poprzednia",
+          "next":       "Następna",
+          "last":       "Ostatnia"
         },
-        "pageLength": 10,
-        "order": [[ 3, "desc" ]]
+        "aria": {
+          "sortAscending": ": aktywuj, by posortować kolumnę rosnąco",
+          "sortDescending": ": aktywuj, by posortować kolumnę malejąco"
+        }
+      },
+      "pageLength": 10,
+      "order": [[ 3, "desc" ]]
 
-      });
-      $('.dataTables_length').addClass('bs-select');
     });
-  </script>
+    $('.dataTables_length').addClass('bs-select');
+  });
+</script>
 @endsection

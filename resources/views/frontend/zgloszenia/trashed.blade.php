@@ -73,8 +73,15 @@
                {{ $entry->created_at }}<br><small>{{ Carbon\Carbon::parse($entry->created_at)->diffForHumans(null, false, false, 2) }}</small>
              </td>
              <td>
-               <a href="{{ route('entry.restore', [$entry->id]) }}" title="Przywróć"><i class="fas fa-trash-restore fa-lg text-success mr-2"></i></a>
-               <a href="{{ route('entry.delete', [$entry->id]) }}" title="Usuń"><i class="far fa-trash-alt fa-lg text-danger"></i></a>
+               <form action="{{ route('entry.restore', [$entry->id]) }}" method="POST">
+    @csrf          
+  <button class="btn btn-sm btn-success" type="submit"><i class="fas fa-trash-restore fa-lg"></i> Przywróć</button>
+</form>
+               <form action="{{ route('entry.delete', [$entry->id]) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-sm btn-danger" type="submit"><i class="far fa-trash-alt fa-lg"></i> Usuń</button>
+              </form>
              </td>
            </tr> 
            @endforeach 

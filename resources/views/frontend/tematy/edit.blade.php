@@ -40,10 +40,14 @@
           </div>
           <div class="col-lg-12 mb-3">
            <hr>
-           <a href="{{ route('subjects') }}" title="Wróć do listy tematów" class="btn btn-info"><i class="far fa-arrow-alt-circle-left fa-lg mr-2"></i> Wróć do listy tematów</a>
+           <a href="{{ route('subjects') }}" title="Wróć do listy tematów" class="btn btn-sm btn-success"><i class="far fa-arrow-alt-circle-left fa-lg mr-2"></i> Wróć do listy tematów</a>
 
            @if($subject->entries->count() == 0)
-               <a href="{{ route('subjects.destroy', [$subject]) }}" class="btn btn-danger" onclick="return confirm('Czy napewno usunąć temat?')" title="Usuń">Usuń <i class="far fa-trash-alt fa-lg ml-2"></i></a>
+              <form action="{{ route('subjects.destroy', [$subject]) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button onclick="return confirm('Czy napewno usunąć temat?')" class="btn btn-sm btn-danger" type="submit">Usuń <i class="far fa-trash-alt fa-lg"></i></button>
+              </form>
             @endif
          </div>
        </div>
