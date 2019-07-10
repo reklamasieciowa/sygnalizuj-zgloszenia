@@ -48,3 +48,16 @@ Route::post('/tematy/edytuj/{subject}', 'SubjectController@update')->name('subje
 Route::delete('/tematy/usun/{subject}', 'SubjectController@destroy')->name('subjects.destroy');
 
 Route::get('/tematy/{subject}', 'SubjectController@entries')->name('subjects.entries');
+
+
+Route::get('/statusy', 'StatusController@index')->name('statuses');
+
+Route::post('/statusy', 'StatusController@store')->name('statuses.store');
+
+Route::get('/statusy/edytuj/{status}', 'StatusController@edit')->name('statuses.edit');
+Route::post('/statusy/edytuj/{status}', 'StatusController@update')->name('statuses.update');
+
+Route::delete('/statusy/usun/{status}', 'StatusController@destroy')->name('statuses.destroy');
+
+Route::get('/statusy/{status}', 'StatusController@entries')->name('statuses.entries');
+

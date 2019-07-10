@@ -34,15 +34,7 @@
           <div class="col-lg-12">
             <hr>
             <strong>Status:</strong> 
-            @if($entry->status->id == 1)
-            <a href="{{ route('entry.changestatus', [$entry->id]) }}" class="text-danger new">
-              @elseif($entry->status->id == 2)
-              <a href="{{ route('entry.changestatus', [$entry->id]) }}" class="text-warning running">
-                @else
-                <a href="{{ route('entry.changestatus', [$entry->id]) }}" class="text-success done">
-                  @endif
-                  {{ $entry->status->name }}
-                </a>
+                @include('shared.statuses')
               </div>
 
               <div class="col-lg-12 mb-3">

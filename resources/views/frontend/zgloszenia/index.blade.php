@@ -49,19 +49,8 @@
              <td>
                {{ $entry->subject->name }}
              </td>
-             <td>
-
-              <form action="{{ route('entry.changestatus', [$entry->id]) }}" method="POST">
-                @csrf          
-                @if($entry->status->id == 1)
-                <button class="btn btn-sm btn-danger btn-rounded" type="submit">{{ $entry->status->name }}</button>
-                @elseif($entry->status->id == 2)
-                <button class="btn btn-sm btn-warning btn-rounded" type="submit">{{ $entry->status->name }}</button>
-                @elseif($entry->status->id == 3)
-                <button class="btn btn-sm btn-success btn-rounded" type="submit">{{ $entry->status->name }}</button>
-                @endif
-
-              </form>
+             <td>         
+              @include('shared.statuses')
             </td>
             <td>
              {{ $entry->created_at }}<br><small>{{ Carbon\Carbon::parse($entry->created_at)->diffForHumans(null, false, false, 2) }}</small>

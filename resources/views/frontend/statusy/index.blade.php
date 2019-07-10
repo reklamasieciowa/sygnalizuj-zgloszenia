@@ -13,19 +13,22 @@
     <div class="row mb-3">
       <div class="col-lg-12">
         <h2 class="h3-responsive">
-          Tematy: 
+          Statusy: 
         </h2>
       </div>
     </div>
 
     <div class="row">
-      @if(isset($subjects))
+      @if(isset($statuses))
       <div class="col-lg-12 table-responsive">
 
-        <table id="subjects" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <table id="statuses" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
           <thead>
             <th class="th-sm">
-              Temat
+              Status
+            </th>
+            <th>
+              Kolor
             </th>
             <th>
               Ilość zgłoszeń
@@ -36,64 +39,78 @@
           </thead>
           <tbody>
 
-           @foreach($subjects as $subject)
+           @foreach($statuses as $status)
            <tr>
              <td>
-               {{ $subject->name }}
+               {{ $status->name }}
              </td>
              <td>
-               <span class="badge badge-info">{{ $subject->entries->count() }}
+               <span class="color-preview" style="background-color: {{ $status->color }};"></span> 
+             </td>
+             <td>
+               <span class="badge badge-info">{{ $status->entries->count() }}
 
-               @if($subject->entries->count() > 0)
-               <a class="" href="{{ route('subjects.entries', [$subject]) }}" title="Zobacz"><i class="far fa-eye text-white ml-2"></i></a>
-               @endif
+                 @if($status->entries->count() > 0)
+                 <a class="" href="{{ route('statuses.entries', [$status]) }}" title="Zobacz"><i class="far fa-eye text-white ml-2"></i></a>
+                 @endif
                </span>
              </td>
              <td>
               <div class="btn-group" role="group" aria-label="Basic example">
-               <a class="btn btn-sm btn-info" href="{{ route('subjects.edit', [$subject]) }}" title="Edytuj"><i class="fas fa-edit fa-lg"></i></a>
-               @if($subject->entries->count() == 0)
-               <form action="{{ route('subjects.destroy', [$subject]) }}" method="POST">
+               <a class="btn btn-sm btn-info" href="{{ route('statuses.edit', [$status]) }}" title="Edytuj"><i class="fas fa-edit fa-lg"></i></a>
+               @if($status->entries->count() == 0)
+               <form action="{{ route('statuses.destroy', [$status]) }}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button onclick="return confirm('Czy napewno usunąć temat?')" class="btn btn-sm btn-danger" type="submit"><i class="far fa-trash-alt fa-lg"></i></button>
+                <button onclick="return confirm('Czy napewno usunąć status?')" class="btn btn-sm btn-danger" type="submit"><i class="far fa-trash-alt fa-lg"></i></button>
               </form>
               @endif
             </div>
-            </td>
-          </tr> 
-          @endforeach 
-        </tbody>
-      </table>
-    </div>
-    @else
-    <p>Brak tematów.</p>
-    @endif
+          </td>
+        </tr> 
+        @endforeach 
+      </tbody>
+    </table>
   </div>
+  @else
+  <p>Brak statusów.</p>
+  @endif
+</div>
 
-  <div class="row mb-3">
-    <div class="col-lg-12">
-      <h3 class="h4-responsive">
-        Dodaj temat:
-      </h3>
-      <form action="{{ route('subjects.store') }}" method="POST">
-        @csrf
+<div class="row mb-3">
+  <div class="col-lg-12">
+    <h3 class="h4-responsive">
+      Dodaj status:
+    </h3>
+    <form action="{{ route('statuses.store') }}" method="POST">
+      @csrf
 
-        <div class="mt-3">
-          <label for="name">Temat</label>
-          <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}">
+      <div class="mt-3">
+        <label for="name">Status</label>
+        <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}">
 
-          @if ($errors->has('name'))
-          <div class="invalid-feedback" role="alert">
-            <strong>{{ $errors->first('name') }}</strong>
-          </div>
-          @endif
+        @if ($errors->has('name'))
+        <div class="invalid-feedback" role="alert">
+          <strong>{{ $errors->first('name') }}</strong>
         </div>
+        @endif
+      </div>
 
-        <button class="btn btn-info my-4" type="submit">Zapisz</button>
-      </form>
-    </div>
+      <div class="mt-3">
+        <label for="name">Kolor</label>
+        <input type="color" id="color" name="color" class="form-control" value="#ff0000">
+
+        @if ($errors->has('color'))
+        <div class="invalid-feedback" role="alert">
+          <strong>{{ $errors->first('color') }}</strong>
+        </div>
+        @endif
+      </div>
+
+      <button class="btn btn-info my-4" type="submit">Zapisz</button>
+    </form>
   </div>
+</div>
 </div>
 </div>
 @endsection

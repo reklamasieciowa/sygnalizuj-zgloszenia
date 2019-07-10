@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(Entry::class, function (Faker $faker) {
     return [
         'company' => $faker->company,
-        'subject_id' =>  $faker->biasedNumberBetween($min = 0, $max = 10),
+        'subject_id' =>  $faker->biasedNumberBetween($min = 1, $max = 10),
         'anonymous' =>  $faker->boolean,
         'person' =>  $faker->unique()->safeEmail,
         'who' =>  $faker->name,

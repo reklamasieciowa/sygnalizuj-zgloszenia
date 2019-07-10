@@ -34,11 +34,30 @@ label {
   color: #60a8e4;
 }
 
-table .btn {
-  padding: 0.5rem !important;
-}
-
 .btn.btn-rounded {
   border-radius: 10em;
+}
+
+.badge {
+  padding: 0.5em;
+  font-size: 1rem;
+}
+
+.status-preview {
+  padding: 0.5rem !important;
+  color: #fff;
+}
+
+.color-preview {
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+#color {
+  width: 75px;
+  height: 70px;
 }
 

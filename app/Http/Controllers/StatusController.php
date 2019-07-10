@@ -14,7 +14,16 @@ class StatusController extends Controller
      */
     public function index()
     {
-        //
+        $statuses = Status::all();
+          
+        return view('frontend.statusy.index')->with('statuses', $statuses);
+    }
+
+    public function entries(Status $status)
+    {
+        $entries = $status->entries()->get();
+          
+        return view('frontend.statusy.entries')->with('entries', $entries)->with('status', $status);
     }
 
     /**
@@ -35,7 +44,22 @@ class StatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'color' => 'required',
+        ]);
+
+        $status = new Status;
+
+        $status->name = $request->name;
+        $status->color = $request->color;
+
+        $status->save();
+
+        $request->session()->flash('class', 'alert-success');
+        $request->session()->flash('info', 'Status '.$status->name.' zapisany.');
+
+        return redirect()->route('statuses');
     }
 
     /**
@@ -57,7 +81,7 @@ class StatusController extends Controller
      */
     public function edit(Status $status)
     {
-        //
+        return view('frontend.statusy.edit')->with('status', $status);
     }
 
     /**
@@ -69,7 +93,20 @@ class StatusController extends Controller
      */
     public function update(Request $request, Status $status)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'color' => 'required',
+        ]);
+
+        $status->name = $request->name;
+        $status->color = $request->color;
+
+        $status->save();
+
+        $request->session()->flash('class', 'alert-success');
+        $request->session()->flash('info', 'Status '.$status->name.' zaktualizowany.');
+
+        return redirect()->route('statuses');
     }
 
     /**
@@ -78,8 +115,13 @@ class StatusController extends Controller
      * @param  \App\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Status $status)
+    public function destroy(Request $request,Status $status)
     {
-        //
+        $status->delete();
+
+        $request->session()->flash('class', 'alert-success');
+        $request->session()->flash('info', 'Status '.$status->name.' usunięty!');
+
+        return redirect()->route('statuses'); 
     }
 }
