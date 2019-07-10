@@ -21,8 +21,8 @@
     <div class="row">
       @if(isset($subjects))
       <div class="col-lg-12 table-responsive">
-        
-        <table id="entries" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+
+        <table id="subjects" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
           <thead>
             <th class="th-sm">
               Temat
@@ -49,16 +49,16 @@
                @endif
              </td>
              <td>
+              <div class="btn-group" role="group" aria-label="Basic example">
                <a class="btn btn-sm btn-info" href="{{ route('subjects.edit', [$subject]) }}" title="Edytuj"><i class="fas fa-edit fa-lg"></i></a>
                @if($subject->entries->count() == 0)
-
                <form action="{{ route('subjects.destroy', [$subject]) }}" method="POST">
                 @csrf
                 @method('DELETE')
                 <button onclick="return confirm('Czy napewno usunąć temat?')" class="btn btn-sm btn-danger" type="submit"><i class="far fa-trash-alt fa-lg"></i></button>
               </form>
-
               @endif
+            </div>
             </td>
           </tr> 
           @endforeach 

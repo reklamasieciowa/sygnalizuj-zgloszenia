@@ -54,11 +54,11 @@
              <form action="{{ route('entry.changestatus', [$entry->id]) }}" method="POST">
                 @csrf          
                 @if($entry->status->id == 1)
-                <button class="btn btn-sm btn-danger" type="submit">{{ $entry->status->name }}</button>
+                <button class="btn btn-sm btn-danger btn-rounded" type="submit">{{ $entry->status->name }}</button>
                 @elseif($entry->status->id == 2)
-                <button class="btn btn-sm btn-warning" type="submit">{{ $entry->status->name }}</button>
+                <button class="btn btn-sm btn-warning btn-rounded" type="submit">{{ $entry->status->name }}</button>
                 @elseif($entry->status->id == 3)
-                <button class="btn btn-sm btn-success" type="submit">{{ $entry->status->name }}</button>
+                <button class="btn btn-sm btn-success btn-rounded" type="submit">{{ $entry->status->name }}</button>
                 @endif
 
               </form>
@@ -68,6 +68,7 @@
                {{ $entry->created_at }}<br><small>{{ Carbon\Carbon::parse($entry->created_at)->diffForHumans(null, false, false, 2) }}</small>
              </td>
              <td>
+              <div class="btn-group" role="group" aria-label="Basic example">
                <a class="btn btn-sm btn-success" href="{{ route('entry.show', [$entry->id]) }}" title="Zobacz"><i class="far fa-eye fa-lg"></i></a>
              <a class="btn btn-sm btn-info" href="{{ route('entry.edit', [$entry->id]) }}" title="Edytuj"><i class="fas fa-edit fa-lg"></i></a>
              <form action="{{ route('entry.delete', [$entry->id]) }}" method="POST">
@@ -75,6 +76,7 @@
               @method('DELETE')
               <button class="btn btn-sm btn-danger" type="submit"><i class="far fa-trash-alt fa-lg"></i></button>
             </form>
+          </div>
              </td>
            </tr> 
            @endforeach 

@@ -31,3 +31,15 @@ label {
 		color: lighten($blue, 10%);
 	}
 }
+
+table {
+	.btn {
+		padding: .5rem!important;
+	}
+}
+
+.btn {
+	&.btn-rounded {
+		border-radius: 10em;
+	}
+}

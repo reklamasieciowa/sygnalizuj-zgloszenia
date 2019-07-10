@@ -34,3 +34,11 @@ label {
   color: #60a8e4;
 }
 
+table .btn {
+  padding: 0.5rem !important;
+}
+
+.btn.btn-rounded {
+  border-radius: 10em;
+}
+
