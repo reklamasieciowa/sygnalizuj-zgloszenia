@@ -22,16 +22,10 @@ class HomeController extends Controller
         return view('frontend.home.index');
     }
 
-    public function status()
-    {
-        return view('frontend.home.status');
-    }
-
     public function checkStatus(Request $request)
     {
         $request->validate([
-            'hash' => 'required',
-            'hash' => 'alpha_num',
+            'hash' => 'required|alpha_num',
         ]);
 
         $none = false;
@@ -41,7 +35,7 @@ class HomeController extends Controller
              $none = true;
         }
 
-        return view('frontend.home.status')->with('entry', $entry)->with('none', $none);
+        return view('frontend.home.index')->with('entry', $entry)->with('none', $none);
         
     }
 }

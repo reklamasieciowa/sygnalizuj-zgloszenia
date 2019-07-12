@@ -18,8 +18,6 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
-
-Route::get('/status', 'HomeController@status')->name('status');
 Route::post('/status', 'HomeController@checkStatus')->name('status.check');
 
 Route::prefix('admin')->group(function () {

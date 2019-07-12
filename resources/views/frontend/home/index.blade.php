@@ -2,32 +2,55 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="container">
-      
-      @include('shared.info')
+  <div class="container">
 
-        <div class="col-lg-4">
-            <!-- Card -->
-            <div class="card">
+    @include('shared.info')
+    
+    <div class="row mb-3">
+      <div class="col-lg-12">
 
-              <!-- Card image -->
-              <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" alt="Card image cap">
-
-              <!-- Card content -->
-              <div class="card-body">
-
-                <!-- Title -->
-                <h4 class="card-title"><a>Front test card</a></h4>
-                <!-- Text -->
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <!-- Button -->
-                <a href="#" class="btn btn-primary">Button</a>
-
-            </div>
-
-        </div>
-        <!-- Card -->
+      </div>
     </div>
-</div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+              <h2 class="card-title h3-responsive">
+                Sprawdź status zgłoszenia:
+              </h2>
+
+            @if(isset($entry))
+              <div class="alert alert-info">
+                <p><i class="fas fa-info-circle text-info mr-2"></i> Twoje zgłoszenie ma status: {{ $entry->status->name }}</p>
+              </div>
+            @elseif(isset($none))
+                <div class="alert alert-danger">
+                    <p><i class="fas fa-exclamation-triangle text-danger mr-2"></i> Nie znaleziono zgłoszeń.</p>
+                </div>
+            @endif
+
+              @include('shared.errors')
+              <form action="{{ route('status.check') }}" method="POST">
+                @csrf
+
+                <div class="mt-3">
+                  <label for="hash">Wprowadź numer zgłoszenia:</label>
+                  <input type="text" id="hash" name="hash" class="form-control" value="{{ old('hash') }}">
+
+                  @if ($errors->has('hash'))
+                  <div class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('hash') }}</strong>
+                  </div>
+                  @endif
+                </div>
+                <button class="btn btn-info my-4" type="submit">Sprawdź</button>
+              </form>
+            
+          </div>
+       </div>
+     </div>
+   </div>
+ </div>
 </div>
 @endsection
