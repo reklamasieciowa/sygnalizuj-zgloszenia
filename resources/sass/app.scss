@@ -1,7 +1,14 @@
+@import 'fonts';
 @import 'variables';
 
 body {
 	background-color: #fff;
+	font-family: 'Merriweather', sans-serif;
+}
+
+#logo-nav {
+    width: 180px;
+    height: 31.73px;
 }
 
 .new, .running, .done {
@@ -32,22 +39,6 @@ label {
 	}
 }
 
-.btn {
-	&.btn-rounded {
-		border-radius: 10em;
-	}
-}
-
-.badge {
-	padding: .5em;
-    font-size: 1rem;
-}
-
-.status-preview {
-	padding: .5rem!important;
-	color: #fff;
-}
-
 .color-preview {
 	display: block;
 	width: 30px;
@@ -61,8 +52,3 @@ label {
 	height: 70px;
 }
 
-.alert {
-	p {
-		margin-bottom: 0;
-	}
-}

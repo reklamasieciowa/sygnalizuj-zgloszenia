@@ -2,7 +2,6 @@
 $body-bg: #f8fafc;
 
 // Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
@@ -17,3 +16,126 @@ $yellow: #ffed4a;
 $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
+$red: #db203d;
+$gray: #465665;
+$light-gray: #a1a4a9;
+$blue-syg: #127ea5;
+$apla: #e8edf0;
+
+.rgba-gradient {
+  background: -moz-linear-gradient(45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
+  background: -webkit-linear-gradient(45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
+  background: -webkit-gradient(linear, 45deg, from(rgba(42, 27, 161, 0.7)), to(rgba(29, 210, 177, 0.7)));
+  background: -o-linear-gradient(45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
+  background: linear-gradient(to 45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
+}
+
+.rgba-gradient-blue {
+  background: rgb(90,175,234);
+  background: -moz-radial-gradient(center, ellipse cover, rgba(90,175,234,.85) 0%, rgba(59,97,176,.85) 100%);
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(90,175,234,.85) 0%,rgba(59,97,176,.85) 100%);
+  background: radial-gradient(ellipse at center, rgba(90,175,234,.85) 0%,rgba(59,97,176,.85) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5aafea', endColorstr='#3b61b0',GradientType=1 );
+}
+
+.rgba-gradient-blue-syg {
+  background: rgb(40,108,131);
+  background: -moz-radial-gradient(center, ellipse cover, rgba(40,108,131,.6) 0%, rgba(17,61,77,.6) 100%);
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(40,108,131,.6) 0%,rgba(17,61,77,.6) 100%);
+  background: radial-gradient(ellipse at center, rgba(40,108,131,.6) 0%,rgba(17,61,77,.6) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#286c83', endColorstr='#113d4d',GradientType=1 );
+}
+
+// $gradientStart:  rgba(133,188,208,.9);
+// $gradientStop:  rgba(42,100,122,.7);
+
+$gradientStart:  rgba(17,118,152,.5);
+$gradientStop:  rgba(17,118,152,.5);
+
+.rgba-gradient-blue-syg2 {
+  background: -moz-linear-gradient(45deg, $gradientStart, $gradientStop 100%);
+  background: -webkit-linear-gradient(45deg, $gradientStart, $gradientStop 100%);
+  background: -webkit-gradient(linear, 45deg, from($gradientStart), to($gradientStop));
+  background: -o-linear-gradient(45deg, $gradientStart, $gradientStop 100%);
+  background: linear-gradient(to 45deg, $gradientStart, $gradientStop 100%);
+}
+
+.btn-danger {
+  background-color: $red!important;
+}
+
+.btn-gray {
+  background-color: $gray;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+.bg-gray {
+  background-color: $gray;
+}
+
+.bg-light-gray {
+  background-color: $light-gray;
+}
+
+.btn-light-gray {
+  color:#fff!important;
+  background-color: $light-gray;
+
+  &:hover {
+    background-color: $red!important;
+    color: #fff;
+  }
+}
+
+.note {
+  padding: 10px;
+  border-left: none;
+  border-top: 3px solid;
+  border-radius: 0;
+
+  &.note-info {
+    background-color: $apla;
+    border-color: $red;
+  }
+}
+
+.blue-syg-text {
+  color: $blue-syg;
+}
+
+.bg-blue-syg {
+  background-color: $blue-syg;
+}
+
+.bg-gray {
+  background-color: $gray;
+}
+
+.text-shadow {
+  text-shadow: 0px 2px 10px rgba(0,0,0, .4);
+}
+
+.btn {
+	&.btn-rounded {
+		border-radius: 10em;
+	}
+}
+
+.badge {
+	padding: .5em;
+    font-size: 1rem;
+}
+
+.status-preview {
+	padding: .5rem!important;
+	color: #fff;
+}
+
+.alert {
+	p {
+		margin-bottom: 0;
+	}
+}

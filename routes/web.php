@@ -19,6 +19,7 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::post('/status', 'HomeController@checkStatus')->name('status.check');
+Route::get('/zgloszenia/dodaj', 'EntryController@create')->name('entry.create');
 
 Route::prefix('admin')->group(function () {
 	Route::get('/', 'AdminController@index')->name('admin.home');
@@ -32,7 +33,6 @@ Route::prefix('admin')->group(function () {
 	Route::get('/zgloszenia/edytuj/{entry}', 'EntryController@edit')->name('entry.edit');
 	Route::post('/zgloszenia/edytuj/{entry}', 'EntryController@update')->name('entry.update');
 
-	Route::get('/zgloszenia/dodaj', 'EntryController@create')->name('entry.create');
 	Route::post('/zgloszenia/dodaj', 'EntryController@store')->name('entry.store');
 
 	Route::delete('/zgloszenia/{entry}', 'EntryController@destroy')->name('entry.delete');

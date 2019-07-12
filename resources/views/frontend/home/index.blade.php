@@ -13,10 +13,13 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-lg-8">
+        
+      </div>
+      <div class="col-lg-4">
         <div class="card">
           <div class="card-body">
-              <h2 class="card-title h3-responsive">
+              <h2 class="card-title h5-responsive">
                 Sprawdź status zgłoszenia:
               </h2>
 
@@ -44,7 +47,7 @@
                   </div>
                   @endif
                 </div>
-                <button class="btn btn-info my-4" type="submit">Sprawdź</button>
+                <button class="btn btn-info mt-4" type="submit">Sprawdź</button>
               </form>
             
           </div>
