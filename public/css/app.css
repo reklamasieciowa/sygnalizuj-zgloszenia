@@ -194,6 +194,16 @@
   margin-bottom: 0;
 }
 
+.ico-img {
+  padding: 50px 0;
+  background-color: #127ea5;
+}
+
+.ico-img i {
+  font-size: 6rem;
+  color: #fff;
+}
+
 body {
   background-color: #fff;
   font-family: "Merriweather", sans-serif;
@@ -232,6 +242,20 @@ label {
   margin-right: 5px;
   content: "\F05A";
   color: #60a8e4;
+}
+
+.footer-info h5 {
+  color: #db203d;
+}
+
+.footer-info ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-info ul li {
+  padding: 5px 0;
 }
 
 .color-preview {

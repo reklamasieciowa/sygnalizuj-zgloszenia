@@ -10,6 +10,17 @@ use Illuminate\Support\Facades\DB;
 
 class EntryController extends Controller
 {
+
+    public function __construct()
+{
+    $this->middleware('auth', ['except' => array('create', 'store', 'checkStatus')]);
+}
+
+    public function home()
+    {        
+        return view('frontend.zgloszenia.home');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -78,8 +89,8 @@ class EntryController extends Controller
 
         $entry->save();
 
-        $request->session()->flash('class', 'alert-success');
-        $request->session()->flash('info', 'Zgłoszenie '.$entry->company.' zapisane.');
+        $request->session()->flash('class', 'alert-info');
+        $request->session()->flash('info', 'Zgłoszenie '.$entry->company.' zapisane. Uwaga! Zapisz numer zgłoszenia, aby w przyszłości sprawdzić jego status. Numer referencyjny zgłoszenia: '.$entry->hash.'.');
 
         return redirect()->route('home');
     }
@@ -168,6 +179,26 @@ class EntryController extends Controller
         $request->session()->flash('info', 'Zgłoszenie '.$entry->company.' zapisane.');
 
         return redirect()->back();
+    }
+
+    public function checkStatus(Request $request)
+    {
+        $request->validate([
+            'hash' => 'required|alpha_num',
+        ]);
+
+        $entry = Entry::where('hash', $request->hash)->first();
+
+        if($entry === null) {
+            $entry = false;
+            $request->session()->flash('class', 'alert-danger');
+            $request->session()->flash('info', 'Zgłoszenie o numerze '.$request->hash.' nie istnieje.');
+            return back();
+        } else {
+            $request->session()->flash('class', 'alert-info');
+            $request->session()->flash('info', 'Status Twojego zgłoszenia: '.$entry->status->name.'.');
+            return back();
+        }
     }
 
 

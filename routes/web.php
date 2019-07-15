@@ -11,18 +11,15 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('frontend.index');
-// });
-
-Auth::routes();
+Auth::routes(['verify' => true, 'register' => false]);
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::post('/status', 'HomeController@checkStatus')->name('status.check');
+
+Route::post('/zgloszenia/status', 'EntryController@checkStatus')->name('status.check');
 Route::get('/zgloszenia/dodaj', 'EntryController@create')->name('entry.create');
 
 Route::prefix('admin')->group(function () {
-	Route::get('/', 'AdminController@index')->name('admin.home');
+	Route::get('/', 'EntryController@home')->name('admin.home');
 
 	Route::post('/zgloszenia/przywroc/{entry}', 'EntryController@restore')->name('entry.restore');
 	Route::post('/zgloszenia/status/{entry}', 'EntryController@changeStatus')->name('entry.changestatus');
