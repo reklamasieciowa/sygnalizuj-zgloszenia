@@ -21,7 +21,7 @@
 
             @include('shared.errors')
 
-            <form action="{{ route('entry.store') }}" method="POST">
+            <form action="{{ route('entry.store') }}" method="POST" enctype="multipart/form-data">
               @csrf
 
               <div class="mt-3">
@@ -103,7 +103,7 @@
               </div>
 
               <div class="mt-3">
-                <label for="when">Kiedy</label>
+                <label for="when">Kiedy?</label>
                 <input type="text" id="when" name="when" class="form-control" value="{{ old('when') }}">
                 @if ($errors->has('when'))
                 <div class="invalid-feedback" role="alert">
@@ -129,19 +129,19 @@
               </div>
 
               <div class="form-group">
-                <label for="attachment_id">Załącz plik</label>
+                <label for="attachment">Załącz plik</label>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroupFileAddon01">Załącznik</span>
                   </div>
                   <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="attachment_id" name="attachment_id"
+                    <input type="file" class="custom-file-input" id="attachment" name="attachment"
                     aria-describedby="inputGroupFileAddon01">
-                    <label class="custom-file-label" for="attachment_id">Wybierz plik</label>
+                    <label class="custom-file-label" for="attachment">Wybierz plik</label>
                   </div>
                 </div>
                 <p class="explainer">
-                  Pliki muszą mieć mniej niż 64 MB. Dozwolone typy plików: txt doc docx xls pdf html jpeg jpg png mp4 mov wmv avi mp3 wav.
+                  Pliki muszą mieć mniej niż 50MB. Dozwolone typy plików: doc, docx, jpeg, jpg, png, mp4, x-flv, m3u, mp4, 3gp, mov, avi, wmv, zip.
                 </p>
               </div>
 
@@ -191,7 +191,7 @@
               </div>
 
               <div class="form-group">
-                <label for="agree">Zgoda na przetwarzenie danych?</label><br>
+                <label for="agree">Zgoda na przetwarzenie danych</label><br>
                 <div class="custom-control custom-radio custom-control-inline">
                   <input type="radio" class="custom-control-input" id="agree1" name="agree" value="0" @if(old('agree') === 0) checked @endif>
                   <label class="custom-control-label" for="agree1">Nie</label>

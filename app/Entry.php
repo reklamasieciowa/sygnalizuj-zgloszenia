@@ -2,9 +2,10 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-use App\Subject;
+use App\Attachment;
 use App\Status;
+use App\Subject;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Entry extends Model
@@ -31,5 +32,10 @@ class Entry extends Model
     public function status()
     {
         return $this->belongsTo(Status::class);
+    }
+
+    public function attachment()
+    {
+        return $this->hasOne(Attachment::class);
     }
 }

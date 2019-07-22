@@ -24,7 +24,6 @@ class CreateEntriesTable extends Migration
             $table->text('where');
             $table->text('when');
             $table->text('how');
-            $table->unsignedInteger('attachment_id')->nullable();
             $table->text('why');
             $table->text('already_done');
             $table->boolean('agree');

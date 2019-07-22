@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Attachment;
 use App\Entry;
 use App\Status;
 use App\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input as Input;
+use Illuminate\Support\Facades\Storage;
 
 class EntryController extends Controller
 {
@@ -63,14 +66,13 @@ class EntryController extends Controller
             'where' => 'required',
             'when' => 'required',
             'how' => 'required',
-            //'attachment_id' => 'nullable',
+            'attachment' => 'nullable|file|max:50000|mimes:doc,docx,jpeg,jpg,png,mp4,x-flv,x-mpegURL,MP2T,3gpp,quicktime,x-msvideo,x-ms-wmv,zip',  
             'why' => 'required',
             'already_done' => 'required',
             'agree' => 'required',
         ]);
 
         $entry = new Entry;
-
         $entry->company = $request->company;
         $entry->subject_id = $request->subject_id;
         $entry->anonymous = $request->anonymous;
@@ -80,14 +82,24 @@ class EntryController extends Controller
         $entry->where = $request->where;
         $entry->when = $request->when;
         $entry->how = $request->how;
-        //$entry->attachment_id = $request->attachment_id;
         $entry->why = $request->why;
         $entry->already_done = $request->already_done;
         $entry->agree = $request->agree;
-
         $entry->hash = md5(uniqid('', true));
-
         $entry->save();
+
+        if ($request->hasFile('attachment')) {
+            if ($request->file('attachment')->isValid()) {
+                $attachment_path = $request->attachment->store('zalaczniki');
+
+                $attachment = new Attachment;
+                $attachment->entry_id = $entry->id;
+                $attachment->file_name = $attachment_path;
+                $attachment->mime =  $request->attachment->getMimeType();
+               
+                $attachment->save();
+            }
+        }
 
         $request->session()->flash('class', 'alert-info');
         $request->session()->flash('info', 'Zgłoszenie '.$entry->company.' zapisane. Uwaga! Zapisz numer zgłoszenia, aby w przyszłości sprawdzić jego status. Numer referencyjny zgłoszenia: '.$entry->hash.'.');
@@ -118,6 +130,12 @@ class EntryController extends Controller
         return view('frontend.zgloszenia.show')->with('entry', $entry);
     }
 
+    public function downloadAttachment(Attachment $attachment)
+    {
+        return Storage::download($attachment->file_name);
+    }
+
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -151,7 +169,6 @@ class EntryController extends Controller
             'where' => 'required',
             'when' => 'required',
             'how' => 'required',
-            //'attachment_id' => 'nullable',
             'why' => 'required',
             'already_done' => 'required',
             'agree' => 'required',
@@ -167,7 +184,6 @@ class EntryController extends Controller
         $entry->where = $request->where;
         $entry->when = $request->when;
         $entry->how = $request->how;
-        //$entry->attachment_id = $request->attachment_id;
         $entry->why = $request->why;
         $entry->already_done = $request->already_done;
         $entry->agree = $request->agree;
@@ -226,7 +242,16 @@ class EntryController extends Controller
 
     public function emptyTrash(Request $request)
     {
-        $entries = Entry::onlyTrashed()->forceDelete();
+        $entries = Entry::onlyTrashed()->get();
+
+        foreach ($entries as $entry) {
+            if ( !empty($entry->attachment) ) {
+                Storage::delete($entry->attachment->file_name);
+                $entry->attachment->delete();
+            }
+        }
+
+        Entry::onlyTrashed()->forceDelete();
 
         $request->session()->flash('class', 'alert-success');
         $request->session()->flash('info', 'Kosz opróżniony.');
@@ -250,6 +275,7 @@ class EntryController extends Controller
             $request->session()->flash('info', 'Zgłoszenie '.$entry->company.' przeniesione do kosza.');
             return redirect()->route('entries');
         } else {
+            //entry attachment deleting in appserviceprovider (deleting event)
             $entry->forceDelete();
             $request->session()->flash('class', 'alert-success');
             $request->session()->flash('info', 'Zgłoszenie '.$entry->company.' usunięte.');

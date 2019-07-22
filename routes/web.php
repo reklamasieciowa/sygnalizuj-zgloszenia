@@ -18,6 +18,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::post('/zgloszenia/status', 'EntryController@checkStatus')->name('status.check');
 Route::get('/zgloszenia/dodaj', 'EntryController@create')->name('entry.create');
 
+
 Route::prefix('admin')->group(function () {
 	Route::get('/', 'EntryController@home')->name('admin.home');
 
@@ -46,7 +47,6 @@ Route::prefix('admin')->group(function () {
 
 	Route::get('/tematy/{subject}', 'SubjectController@entries')->name('subjects.entries');
 
-
 	Route::get('/statusy', 'StatusController@index')->name('statuses');
 
 	Route::post('/statusy', 'StatusController@store')->name('statuses.store');
@@ -58,4 +58,5 @@ Route::prefix('admin')->group(function () {
 
 	Route::get('/statusy/{status}', 'StatusController@entries')->name('statuses.entries');
 
+	Route::get('/zalaczniki/{attachment}', 'EntryController@downloadAttachment')->name('attachment.download');
 });

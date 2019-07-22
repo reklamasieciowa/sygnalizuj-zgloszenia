@@ -113,7 +113,7 @@
               </div>
 
               <div class="mt-3">
-                Załącznik  {{ $entry->attachment_id }}
+                Załącznik:  @if(!empty($entry->attachment->file_name)) {{ $entry->attachment->file_name }} @else <em>brak</em> @endif
               </div>
 
               <div class="mt-3">

@@ -20,9 +20,14 @@
             <p><strong>Osoba:</strong> {{ $entry->person }}</p>
             <p><strong>Co się stało:</strong> {{ $entry->what }}</p>
             <p><strong>Gdzie:</strong> {{ $entry->where }}</p>
-            <p><strong>Kiedy:</strong> {{ $entry->when }} ({{ Carbon\Carbon::parse($entry->when)->diffForHumans(null, false, false, 2) }})</p>
+            <p><strong>Kiedy:</strong> {{ $entry->when }}</p>
             <p><strong>Jak:</strong> {{ $entry->how }}</p>
-            <p><strong>Załącznik:</strong> {{ $entry->attachment_id }}</p>
+            <p><strong>Załącznik:</strong>
+              @if(!empty($entry->attachment->file_name))
+                {{ $entry->attachment->mime }} <a class="btn btn-info btn-sm" href="{{ route('attachment.download', [$entry->attachment->id]) }}" target="_blank"><i class="far fa-eye fa-lg mr-2"></i> Pobierz</a>
+              @else
+                <em>brak</em>
+              @endif</p>
             <p><strong>Dlaczego:</strong> {{ $entry->why }}</p>
             <p><strong>Co zostało zrobione:</strong> {{ $entry->already_done }}</p>
             <p><strong>Zgłoszone:</strong> {{ $entry->created_at }} ({{ Carbon\Carbon::parse($entry->created_at)->diffForHumans(null, false, false, 2) }})</p>
