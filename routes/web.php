@@ -19,7 +19,7 @@ Route::post('/zgloszenia/status', 'EntryController@checkStatus')->name('status.c
 Route::get('/zgloszenia/dodaj', 'EntryController@create')->name('entry.create');
 
 
-Route::prefix('admin')->group(function () {
+Route::prefix('zaplecze')->group(function () {
 	Route::get('/', 'EntryController@home')->name('admin.home');
 
 	Route::post('/zgloszenia/przywroc/{entry}', 'EntryController@restore')->name('entry.restore');
@@ -59,13 +59,5 @@ Route::prefix('admin')->group(function () {
 	Route::get('/statusy/{status}', 'StatusController@entries')->name('statuses.entries');
 
 	Route::get('/zalaczniki/{attachment}', 'EntryController@downloadAttachment')->name('attachment.download');
-
-	Route::get('/mail', function() {
-		$entry = App\Entry::find(1);
-
-		return new App\Mail\NewEntry($entry);
-	});
-
-
 
 });
