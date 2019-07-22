@@ -59,4 +59,13 @@ Route::prefix('admin')->group(function () {
 	Route::get('/statusy/{status}', 'StatusController@entries')->name('statuses.entries');
 
 	Route::get('/zalaczniki/{attachment}', 'EntryController@downloadAttachment')->name('attachment.download');
+
+	Route::get('/mail', function() {
+		$entry = App\Entry::find(1);
+
+		return new App\Mail\NewEntry($entry);
+	});
+
+
+
 });

@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Attachment;
 use App\Entry;
+use App\Mail\NewEntry;
 use App\Status;
 use App\Subject;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input as Input;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class EntryController extends Controller
@@ -100,6 +103,9 @@ class EntryController extends Controller
                 $attachment->save();
             }
         }
+
+        $admin = User::find(1);
+        Mail::to($admin)->send(new NewEntry($entry));
 
         $request->session()->flash('class', 'alert-info');
         $request->session()->flash('info', 'Zgłoszenie '.$entry->company.' zapisane. Uwaga! Zapisz numer zgłoszenia, aby w przyszłości sprawdzić jego status. Numer referencyjny zgłoszenia: '.$entry->hash.'.');
