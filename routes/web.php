@@ -15,9 +15,10 @@ Auth::routes(['verify' => true, 'register' => false]);
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::post('/zgloszenia/status', 'EntryController@checkStatus')->name('status.check');
-Route::get('/zgloszenia/dodaj', 'EntryController@create')->name('entry.create');
-
+Route::middleware('throttle:60,1')->group(function () {
+	Route::post('/zgloszenia/status', 'EntryController@checkStatus')->name('status.check');
+	Route::get('/zgloszenia/dodaj', 'EntryController@create')->name('entry.create');
+});
 
 Route::prefix('zaplecze')->group(function () {
 	Route::get('/', 'EntryController@home')->name('admin.home');
